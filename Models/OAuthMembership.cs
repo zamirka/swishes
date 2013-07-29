@@ -15,6 +15,7 @@ namespace swishes.Models
         [MaxLength(30)]
         public string Provider { get; set; }
 
+        [Key]
         [Required]
         [MaxLength(100)]
         public string ProviderUserId { get; set; }

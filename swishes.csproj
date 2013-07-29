@@ -187,32 +187,25 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\WishesController.cs" />
     <Compile Include="DataAccess\DatabaseContext.cs" />
+    <Compile Include="Migrations\201307292027553_Init.cs" />
+    <Compile Include="Migrations\201307292027553_Init.Designer.cs">
+      <DependentUpon>201307292027553_Init.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Membership.cs" />
     <Compile Include="Models\OAuthMembership.cs" />
     <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\UserInRole.cs" />
     <Compile Include="Models\UserProfile.cs" />
     <Compile Include="Models\Wish.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201305292120477_InitialState.cs" />
-    <Compile Include="Migrations\201305292120477_InitialState.Designer.cs">
-      <DependentUpon>201305292120477_InitialState.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201305292159318_AddWishes.cs" />
-    <Compile Include="Migrations\201305292159318_AddWishes.Designer.cs">
-      <DependentUpon>201305292159318_AddWishes.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\SiteData.mdf" />
-    <Content Include="App_Data\SiteData_log.ldf">
-      <DependentUpon>SiteData.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -333,17 +326,16 @@
     <Content Include="Views\Wishes\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201305292120477_InitialState.resx">
-      <DependentUpon>201305292120477_InitialState.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201305292159318_AddWishes.resx">
-      <DependentUpon>201305292159318_AddWishes.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201307292027553_Init.resx">
+      <DependentUpon>201307292027553_Init.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
