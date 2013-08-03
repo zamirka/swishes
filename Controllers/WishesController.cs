@@ -6,7 +6,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using swishes.Models;
-
 using swishes.DataAccess;
 
 namespace swishes.Controllers
@@ -51,12 +50,10 @@ namespace swishes.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Wish wish)
         {
-            if (ModelState.IsValid)
-            {
-                db.Wishes.Add(wish);
+            wish.UserId=Membership.GetUser().ProviderUserKey   
+            db.Wishes.Add(wish);
                 db.SaveChanges();
                 return RedirectToAction("Index");
-            }
 
             return View(wish);
         }

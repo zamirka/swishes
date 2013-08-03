@@ -1,4 +1,4 @@
-﻿@model swishes.Entities.Wish
+﻿@model swishes.Models.Wish
 
 @{
     ViewBag.Title = "Create";
@@ -36,7 +36,6 @@
             @Html.EditorFor(model => model.Link)
             @Html.ValidationMessageFor(model => model.Link)
         </div>
-        @Html.HiddenFor(model=>model.
         <p>
             <input type="submit" value="Create" />
         </p>
