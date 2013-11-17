@@ -13,13 +13,19 @@ else
     {
     @Html.AntiForgeryToken()
     <fieldset id="socialLoginList">
-        <legend>Log in using another service</legend>
-        <p>
+        <h3>
         @foreach (AuthenticationClientData p in Model)
         {
-            <button type="submit" name="provider" value="@p.AuthenticationClient.ProviderName" title="Log in using your @p.DisplayName account">@p.DisplayName</button>
+            if (p.AuthenticationClient.ProviderName == "facebook") 
+            {
+                <button type="submit" name="provider" value="@p.AuthenticationClient.ProviderName" class="btn btn-primary btn-lg">@p.DisplayName<i class="fa fa-facebook"></i></button>     
+            }
+            else if (p.AuthenticationClient.ProviderName == "twitter")
+            {
+                <button type="submit" name="provider" value="@p.AuthenticationClient.ProviderName" class="btn btn-info btn-lg">@p.DisplayName<i class="fa fa-twitter"></i></button>     
+            }
         }
-        </p>
+        </h3>
     </fieldset>
     }
 }

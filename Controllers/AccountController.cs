@@ -18,6 +18,8 @@ namespace swishes.Controllers
     [InitializeSimpleMembership]
     public class AccountController : Controller
     {
+        private DatabaseContext db = new DatabaseContext();
+        
         //
         // GET: /Account/Login
 
@@ -82,7 +84,9 @@ namespace swishes.Controllers
                 {
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
                     WebSecurity.Login(model.UserName, model.Password);
-                    return RedirectToAction("Index", "Home");
+                    CreateWishList(model.UserName);
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "Wishes");
                 }
                 catch (MembershipCreateUserException e)
                 {
@@ -277,10 +281,9 @@ namespace swishes.Controllers
                         // Insert name into the profile table
                         db.UserProfiles.Add(new UserProfile { UserName = model.UserName });
                         db.SaveChanges();
-
+                        CreateWishList(model.UserName);
                         OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
                         OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
-
                         return RedirectToLocal(returnUrl);
                     }
                     else
@@ -295,6 +298,12 @@ namespace swishes.Controllers
             return View(model);
         }
 
+        private void CreateWishList(string userName)
+        {
+            var wishList = new WishList() { UserId = db.UserProfiles.Where(up => up.UserName == userName).Select(up => up.UserId).SingleOrDefault() };
+            db.WishLists.Add(wishList);
+            db.SaveChanges();
+        }
         //
         // GET: /Account/ExternalLoginFailure
 

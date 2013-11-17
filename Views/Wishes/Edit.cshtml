@@ -6,7 +6,8 @@
 
 <h2>Edit</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
@@ -14,6 +15,8 @@
         <legend>Wish</legend>
 
         @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.WishListId)
+        @Html.HiddenFor(model => model.ImageName)
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Name)
@@ -40,13 +43,15 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.UserId)
+            @Html.LabelFor(model => model.Status)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.UserId)
-            @Html.ValidationMessageFor(model => model.UserId)
+            @Html.EditorFor(model => model.Status)
+            @Html.ValidationMessageFor(model => model.Status)
         </div>
-
+        <div>
+            <input type="file" name="file" />
+        </div>
         <p>
             <input type="submit" value="Save" />
         </p>

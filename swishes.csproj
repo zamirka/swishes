@@ -187,10 +187,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\WishesController.cs" />
     <Compile Include="DataAccess\DatabaseContext.cs" />
-    <Compile Include="Migrations\201307292027553_Init.cs" />
-    <Compile Include="Migrations\201307292027553_Init.Designer.cs">
-      <DependentUpon>201307292027553_Init.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Models\Entities\WishPrioriries.cs" />
+    <Compile Include="Models\Entities\WishStatuses.cs" />
     <Compile Include="Models\Membership.cs" />
     <Compile Include="Models\OAuthMembership.cs" />
     <Compile Include="Models\Role.cs" />
@@ -201,8 +199,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\WishList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -265,6 +263,8 @@
     <None Include="Properties\PublishProfiles\testfacebook.pubxml" />
     <None Include="Properties\PublishProfiles\testsocial - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\testsocial - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\wishme - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\wishme - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
@@ -317,24 +317,22 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Wishes\Index.cshtml" />
     <Content Include="Views\Wishes\Details.cshtml" />
     <Content Include="Views\Wishes\Create.cshtml" />
     <Content Include="Views\Wishes\Edit.cshtml" />
     <Content Include="Views\Wishes\Delete.cshtml" />
+    <Content Include="Views\Wishes\NotAuthenticated.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_SuperLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201307292027553_Init.resx">
-      <DependentUpon>201307292027553_Init.cs</DependentUpon>
-    </EmbeddedResource>
+    <Folder Include="UserFiles\WishImages\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

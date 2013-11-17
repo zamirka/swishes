@@ -1,57 +1,46 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_SuperLayout.cshtml";
 }
-@section featured {
-    <section class="featured">
-        <div class="content-wrapper">
-            <hgroup class="title">
-                <h1>@ViewBag.Title.</h1>
-                <h2>@ViewBag.Message</h2>
-            </hgroup>
-            <p>
-                To learn more about ASP.NET MVC visit
-                <a href="http://asp.net/mvc" title="ASP.NET MVC Website">http://asp.net/mvc</a>.
-                The page features <mark>videos, tutorials, and samples</mark> to help you get the most from ASP.NET MVC.
-                If you have any questions about ASP.NET MVC visit
-                <a href="http://forums.asp.net/1146.aspx/1?MVC" title="ASP.NET MVC Forum">our forums</a>.
-            </p>
+@section Menu {
+     <ul class="nav nav-pills pull-right">
+          <li class="active">
+            @Html.ActionLink("Home", "Index", "Home")
+          </li>
+          <li>
+            @Html.ActionLink("About", "About", "Home")
+          </li>
+          <li>
+              @Html.ActionLink("Contacts", "Contact", "Home")
+          </li>
+            <li>@Html.ActionLink("Sign In", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        </ul>
+}
+
+
+      <div class="jumbotron">
+        <h1>Wish.me - wishes that come&nbsp;</h1>
+        <p class="lead">Wish.me very easy and common way to collaborate with wishlist</p>
+        <p>@Html.ActionLink("Sign up today", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class="btn btn-lg btn-success" })</p>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <h4>Create your wishlist</h4>
+          <img src="https://app.divshot.com/img/placeholder-100x100.gif" class="img-rounded" align="middle">
+          <p>Just enter some words or link from Yandex.Market or Amazon.com</p>
         </div>
-    </section>
+        <div class="col-md-4">
+          <h4>Follow important dates</h4>
+          <img src="https://app.divshot.com/img/placeholder-100x100.gif" class="img-rounded" align="middle">
+          <p>Follow your friends and know when and what to gift</p>
+        </div>
+        <div class="col-md-4">
+          <h4>Plan gift buying&nbsp;</h4>
+          <img src="https://app.divshot.com/img/placeholder-100x100.gif" class="img-rounded" align="middle">
+          <p>Create groups to organize and plan gift shopping</p>
+        </div>
+      </div>
+      @Html.ActionLink("Sign up today", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-success btn-lg btn-block" })
+
+@section Scripts{
+
 }
-
-@if (System.IO.File.Exists(Server.MapPath("~/App_Data/SiteData.sdf")))
-{
-     @Html.Raw("File exists");
-}
-else
-{
-    @Html.Raw("File not exists");   
-}
-
-@Html.Raw(AppDomain.CurrentDomain.GetData("DataDirectory"))
-
-<h3>We suggest the following:</h3>
-<ol class="round">
-    <li class="one">
-        <h5>Getting Started</h5>
-        ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-        enables a clean separation of concerns and that gives you full control over markup
-        for enjoyable, agile development. ASP.NET MVC includes many features that enable
-        fast, TDD-friendly development for creating sophisticated applications that use
-        the latest web standards.
-        <a href="http://go.microsoft.com/fwlink/?LinkId=245151">Learn more…</a>
-    </li>
-
-    <li class="two">
-        <h5>Add NuGet packages and jump-start your coding</h5>
-        NuGet makes it easy to install and update free libraries and tools.
-        <a href="http://go.microsoft.com/fwlink/?LinkId=245153">Learn more…</a>
-    </li>
-
-    <li class="three">
-        <h5>Find Web Hosting</h5>
-        You can easily find a web hosting company that offers the right mix of features
-        and price for your applications.
-        <a href="http://go.microsoft.com/fwlink/?LinkId=245157">Learn more…</a>
-    </li>
-</ol>

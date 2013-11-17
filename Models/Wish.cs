@@ -6,6 +6,8 @@ using System.Data;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+using swishes.Models.Entities;
+
 namespace swishes.Models
 {
     [Table("Wishes")]
@@ -27,10 +29,16 @@ namespace swishes.Models
         [Timestamp]
         public byte[] TimeStamp { get; set; }
 
-        [Column("UserId")]
-        [Required]
-        public string UserId { get; set; }
+        [Column("Priority", TypeName = "int")]
+        public WishPrioriries Prioriry { get; set; }
 
-        public UserProfile Profile { get; set; }
+        [Column("Status", TypeName = "int")]
+        public WishStatuses Status { get; set; }
+
+        public int WishListId { get; set; }
+
+        public string ImageName { get; set; }
+
+        public decimal? Price { get; set; }
     }
 }
