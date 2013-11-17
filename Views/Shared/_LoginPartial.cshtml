@@ -1,14 +1,25 @@
-﻿@if (Request.IsAuthenticated) {
-    <text>
-        Hello, @Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage" })!
-        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) {
-            @Html.AntiForgeryToken()
-            <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
-        }
-    </text>
+﻿@if (Request.IsAuthenticated)
+{
+    <div class="col-md-3">
+        <div class="media pull-right">
+            <a class="pull-left" href="@Url.Action("Manage", "Account")">
+                <img class="media-object" src="https://app.divshot.com/img/placeholder-64x64.gif">
+            </a>
+            <div class="media-body">
+                <h4 class="media-heading">@User.Identity.Name</h4>
+                <p>Welcome! Let's your wish come true</p>
+            </div>
+            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+            {
+                @Html.AntiForgeryToken()
+                <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+            }
+        </div>
+    </div>
 } else {
     <ul>
         <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
 }
+

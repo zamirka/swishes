@@ -2,48 +2,77 @@
 
 @{
     ViewBag.Title = "Log in";
+    Layout = "~/Views/Shared/_SuperLayout.cshtml";
 }
 
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-</hgroup>
+@section Menu {
+     <ul class="nav nav-pills pull-right">
+          <li>
+            @Html.ActionLink("Home", "Index", "Home")
+          </li>
+          <li>
+            @Html.ActionLink("About", "About", "Home")
+          </li>
+          <li>
+              @Html.ActionLink("Contacts", "Contact", "Home")
+          </li>
+          <li class="active">
+              @Html.ActionLink("Sign In", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+          </li>
+        </ul>
+}
 
-<section id="loginForm">
-<h2>Use a local account to log in.</h2>
 @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
-    @Html.AntiForgeryToken()
+   
+     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
     <fieldset>
-        <legend>Log in Form</legend>
-        <ol>
-            <li>
-                @Html.LabelFor(m => m.UserName)
-                @Html.TextBoxFor(m => m.UserName)
-                @Html.ValidationMessageFor(m => m.UserName)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.Password)
-                @Html.PasswordFor(m => m.Password)
-                @Html.ValidationMessageFor(m => m.Password)
-            </li>
-            <li>
-                @Html.CheckBoxFor(m => m.RememberMe)
-                @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
-            </li>
-        </ol>
-        <input type="submit" value="Log in" />
-    </fieldset>
-    <p>
-        @Html.ActionLink("Register", "Register") if you don't have an account.
-    </p>
-}
-</section>
+<div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="container">
+                    <form class="form-signin">
+                        <h2 class="form-signin-heading">Please sign in</h2>
+                        
+                        @Html.TextBoxFor(m => m.UserName, new{@class="form-control", placeholder="Username"})
+                        @Html.ValidationMessageFor(m => m.UserName)
+                        
+                        @Html.PasswordFor(m => m.Password, new{@class="form-control", placeholder="Password"})
+                        @Html.ValidationMessageFor(m => m.Password)
 
-<section class="social" id="socialLoginForm">
-    <h2>Use another service to log in.</h2>
-    @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
-</section>
+                        @Html.LabelFor(m => m.RememberMe, "Remember me",new { @class = "checkbox" })
+                        @Html.CheckBoxFor(m => m.RememberMe, new {value="remember-me"})
+                        
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+
+                        <p>
+                            @Html.ActionLink("Register", "Register", "Account") if you don't have an account.
+                        </p>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h3>Or Sign in using Social Apps :&nbsp;</h3>
+                        </div>
+                        <div class="col-md-8">
+<!--                            <h3>
+                                <button class="btn btn-primary btn-lg">Facebook&nbsp;<i class="fa fa-facebook"></i>                </button>
+                                <a class="btn btn-info btn-lg">Twitter&nbsp;<i class="fa fa-twitter"></i></a>              </h3>-->
+                            <section class="social" id="socialLoginForm">
+                                @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+            </fieldset>
+}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

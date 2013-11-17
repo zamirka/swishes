@@ -16,8 +16,6 @@ namespace swishes.Models
 
         public string UserName { get; set; }
 
-        public virtual ICollection<Wish> Wishes { get; set; }
-
         public virtual ICollection<OAuthMembership> OAuthMemberships { get; set; }
     }
 }
