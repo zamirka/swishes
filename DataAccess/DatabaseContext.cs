@@ -5,7 +5,8 @@ using System.Web;
 using System.Data;
 using System.Data.Entity;
 
-using swishes.Models;
+using swishes.BusinessLogic.Entities.Wishes;
+using swishes.BusinessLogic.Entities.Profile;
 
 namespace swishes.DataAccess
 {
@@ -28,8 +29,6 @@ namespace swishes.DataAccess
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            //modelBuilder.Entity<OAuthMembership>().HasRequired(oauth => oauth.Profile);
-            //modelBuilder.Entity<Wish>().HasRequired(w => w.Profile);
             modelBuilder.Entity<OAuthMembership>().HasKey(a => new { a.Provider, a.ProviderUserId });
             modelBuilder.Entity<UserInRole>().HasKey(a => new { a.UserId, a.RoleId });
         }

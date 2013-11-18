@@ -11,6 +11,8 @@ using WebMatrix.WebData;
 using swishes.Filters;
 using swishes.Models;
 using swishes.DataAccess;
+using swishes.BusinessLogic.Entities.Profile;
+using swishes.BusinessLogic.Entities.Wishes;
 
 namespace swishes.Controllers
 {
