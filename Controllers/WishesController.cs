@@ -50,13 +50,7 @@ namespace swishes.Controllers
 
         public ActionResult Create()
         {
-            var priorities = new List<KeyValuePair<int, string>>()
-            {
-                new KeyValuePair<int, string>(0,"Must have"),
-                new KeyValuePair<int, string>(1,"Nice to have"),
-                new KeyValuePair<int, string>(2,"Maybe")
-            };
-            ViewBag.Priorities = new SelectList(priorities, "Key", "Value");
+            ViewBag.Priorities = GetPriorityListForDropDown();
             return View();
         }
 
@@ -85,6 +79,7 @@ namespace swishes.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.Priorities = GetPriorityListForDropDown();
             return View(wish);
         }
 
@@ -93,19 +88,14 @@ namespace swishes.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Wish wish, HttpPostedFileBase file)
+        public ActionResult Edit(Wish wish)
         {
             if (ModelState.IsValid)
             {
-                db.Wishes.Attach(wish);
-                db.Entry(wish).State = EntityState.Modified;
                 try
                 {
-                    if (file != null && file.ContentLength > 0 && DeleteFile(wish.ImageName))
-                    {
-                        var userProfile = db.UserProfiles.Where(u => u.UserName == User.Identity.Name).SingleOrDefault();
-                        wish.ImageName = SaveFile(userProfile.UserName, file);
-                    }
+                    db.Wishes.Attach(wish);
+                    db.Entry(wish).State = EntityState.Modified;
                     db.SaveChanges();
                 }
                 catch (Exception ex)
@@ -190,6 +180,17 @@ namespace swishes.Controllers
             {
                 return false;
             }
+        }
+
+        private SelectList GetPriorityListForDropDown()
+        {
+            var priorities = new List<KeyValuePair<int, string>>()
+            {
+                new KeyValuePair<int, string>(0,"Must have"),
+                new KeyValuePair<int, string>(1,"Nice to have"),
+                new KeyValuePair<int, string>(2,"Maybe")
+            };
+            return new SelectList(priorities, "Key", "Value");
         }
     }
 }

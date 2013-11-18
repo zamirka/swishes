@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Manage Account";
 }
-
+<div class="container">
 <hgroup class="title">
     <h1>@ViewBag.Title.</h1>
 </hgroup>
@@ -26,7 +26,7 @@ else
     <h3>Add an external login</h3>
     @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
 </section>
-
+</div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

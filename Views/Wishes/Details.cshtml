@@ -1,44 +1,32 @@
 ﻿@model swishes.Models.Wish
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Delete";
 }
-
-<h2>Details</h2>
-
-<fieldset>
-    <legend>Wish</legend>
-
-    <div class="display-image">
-        <img style="width: 600px;" alt="" src="~/UserFiles/WishImages/@Model.ImageName"/>
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Name)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Name)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Description)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Description)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Link)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Link)
-    </div>
-
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Status)
-    </div>
-</fieldset>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<div class="container">
+<div class="media">
+                <div class="media-body">
+                    <h4 class="media-heading">@Html.DisplayFor(model => model.Name)</h4>
+                    <p>
+                        <img class="media-object" style="width:300px;" src="@Model.ImageName">
+                    </p>
+                    <table class="table">
+                        <thead></thead>
+                        <tbody>
+                            <tr>
+                                <td>@Html.DisplayFor(model => model.Description)</td>
+                                <td>
+                                    <b> @Html.DisplayFor(model => model.Price)</b>
+                                </td>
+                                <td> @Html.DisplayFor(model => model.Prioriry)<i class="fa fa-flash"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</div>

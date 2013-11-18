@@ -18,11 +18,11 @@ else
         {
             if (p.AuthenticationClient.ProviderName == "facebook") 
             {
-                <button type="submit" name="provider" value="@p.AuthenticationClient.ProviderName" class="btn btn-primary btn-lg">@p.DisplayName<i class="fa fa-facebook"></i></button>     
+                <button type="submit" name="provider" value="@p.AuthenticationClient.ProviderName" class="btn btn-primary btn-lg">@p.DisplayName &nbsp;<i class="fa fa-facebook"></i></button>     
             }
             else if (p.AuthenticationClient.ProviderName == "twitter")
             {
-                <button type="submit" name="provider" value="@p.AuthenticationClient.ProviderName" class="btn btn-info btn-lg">@p.DisplayName<i class="fa fa-twitter"></i></button>     
+                <button type="submit" name="provider" value="@p.AuthenticationClient.ProviderName" class="btn btn-info btn-lg">@p.DisplayName &nbsp;<i class="fa fa-twitter"></i></button>     
             }
         }
         </h3>
