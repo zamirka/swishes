@@ -187,20 +187,25 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\WishesController.cs" />
     <Compile Include="DataAccess\DatabaseContext.cs" />
-    <Compile Include="Models\Entities\WishPrioriries.cs" />
-    <Compile Include="Models\Entities\WishStatuses.cs" />
-    <Compile Include="Models\Membership.cs" />
-    <Compile Include="Models\OAuthMembership.cs" />
-    <Compile Include="Models\Role.cs" />
-    <Compile Include="Models\UserInRole.cs" />
-    <Compile Include="Models\UserProfile.cs" />
-    <Compile Include="Models\Wish.cs" />
+    <Compile Include="Migrations\201311182028073_Init.cs" />
+    <Compile Include="Migrations\201311182028073_Init.Designer.cs">
+      <DependentUpon>201311182028073_Init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="BusinessLogic\Entities\Enums\WishPrioriries.cs" />
+    <Compile Include="BusinessLogic\Entities\Enums\WishStatuses.cs" />
+    <Compile Include="BusinessLogic\Entities\Profile\Membership.cs" />
+    <Compile Include="BusinessLogic\Entities\Profile\OAuthMembership.cs" />
+    <Compile Include="BusinessLogic\Entities\Profile\Role.cs" />
+    <Compile Include="BusinessLogic\Entities\Profile\UserInRole.cs" />
+    <Compile Include="BusinessLogic\Entities\Profile\UserProfile.cs" />
+    <Compile Include="BusinessLogic\Entities\Wishes\Wish.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\WishList.cs" />
+    <Compile Include="BusinessLogic\Entities\Wishes\WishList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -333,6 +338,11 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="UserFiles\WishImages\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201311182028073_Init.resx">
+      <DependentUpon>201311182028073_Init.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
