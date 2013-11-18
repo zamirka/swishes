@@ -2,8 +2,6 @@
 ## Eclipse
 #################
 
-*.sdf
-*.ldf
 *.pydevproject
 .project
 .metadata
@@ -163,5 +161,7 @@ pip-log.txt
 
 # Mac crap
 .DS_Store
-App_Data/*.mdf
-App_Data/*.ldf
+
+
+*.mdf
+*.ldf
