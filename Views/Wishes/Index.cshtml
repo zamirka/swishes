@@ -17,22 +17,21 @@ else
         @foreach (var item in Model)
         {
             <div class="media">
-                <a class="pull-left" href="@Url.Action("Details", "Details", new { id=item.Id })">
+                <a class="pull-left" href="@Url.Action("Details", "Wishes", new { id=item.Id })">
                     <img class="media-object" style="width:150px;" src="@item.ImageName">
                 </a>
 
                 <div class="media-body">
                     <h4 class="media-heading">@Html.DisplayFor(modelItem => item.Name)</h4>
-                    <p></p>
                     <table class="table">
                         <thead></thead>
                         <tbody>
                             <tr>
-                                <td>@Html.DisplayFor(modelItem => item.Description)</td>
-                                <td>
+                                <td style="width: 70%;">@Html.DisplayFor(modelItem => item.Description)</td>
+                                <td style="width: 15%; text-align:right;">
                                     <b> @Html.DisplayFor(modelItem => item.Price)</b>
                                 </td>
-                                <td> @Html.DisplayFor(modelItem => item.Prioriry)<i class="fa fa-flash"></i>
+                                <td style="width: 15%;  text-align:right;"> @Html.DisplayFor(modelItem => item.Prioriry)&nbsp;<i class="fa fa-flash"></i>
                                 </td>
                             </tr>
                         </tbody>

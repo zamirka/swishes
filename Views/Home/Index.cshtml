@@ -12,7 +12,9 @@
           <li>
               @Html.ActionLink("Contacts", "Contact", "Home")
           </li>
-            <li>@Html.ActionLink("Sign In", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+          <li>
+              @Html.ActionLink("Sign In", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+          </li>
         </ul>
 }
 
@@ -20,8 +22,8 @@
       <div class="jumbotron">
         <h1>Wish.me - wishes that come&nbsp;</h1>
         <p class="lead">Wish.me very easy and common way to collaborate with wishlist</p>
-        <p>@Html.ActionLink("Sign up today", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class="btn btn-lg btn-success" })</p>
-      </div>
+        <p>@Html.ActionLink("Sign up today", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-lg btn-success" })</p>
+    </div>
       <div class="row">
         <div class="col-md-4">
           <h4>Create your wishlist</h4>

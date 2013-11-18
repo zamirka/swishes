@@ -13,8 +13,14 @@
           <li>
               @Html.ActionLink("Contacts", "Contact", "Home")
           </li>
-            <li>@Html.ActionLink("Sign In", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+          <li>
+                @Html.ActionLink("Sign In", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+          </li>
         </ul>
 }
 
 <h2>About section text goes here</h2>
+
+@section Scripts{
+
+}

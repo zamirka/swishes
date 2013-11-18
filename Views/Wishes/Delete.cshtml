@@ -3,38 +3,34 @@
 @{
     ViewBag.Title = "Delete";
 }
+<div class="container">
+<div class="media">
+                <div class="media-body">
+                    <h4 class="media-heading">@Html.DisplayFor(model => model.Name)</h4>
+                    <p>
+                        <img class="media-object" style="width:300px;" src="@Model.ImageName">
+                    </p>
+                    <table class="table">
+                        <thead></thead>
+                        <tbody>
+                            <tr>
+                                <td>@Html.DisplayFor(model => model.Description)</td>
+                                <td>
+                                    <b> @Html.DisplayFor(model => model.Price)</b>
+                                </td>
+                                <td> @Html.DisplayFor(model => model.Prioriry)<i class="fa fa-flash"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
-<fieldset>
-    <legend>Wish</legend>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Name)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Name)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Description)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Description)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Link)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Link)
-    </div>
-</fieldset>
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     <p>
-        <input type="submit" value="Delete" /> |
+        <input type="submit" class="btn btn-delete" value="Delete" /> |
         @Html.ActionLink("Back to List", "Index")
     </p>
 }
+</div>
