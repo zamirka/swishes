@@ -5,7 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace swishes.BusinessLogic.Entities.Profile
+namespace swishes.Core.Entities.Profile
 {
     [Table("UserProfile")]
     public class UserProfile

@@ -1,4 +1,4 @@
-﻿namespace swishes.BusinessLogic.Entities.Enums
+﻿namespace swishes.Core.Entities.Enums
 {
     public enum WishPrioriries
     {

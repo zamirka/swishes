@@ -5,7 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace swishes.BusinessLogic.Entities.Profile
+namespace swishes.Core.Entities.Profile
 {
     [Table("webpages_UsersInRoles")]
     public class UserInRole
@@ -21,5 +21,7 @@ namespace swishes.BusinessLogic.Entities.Profile
         public int RoleId { get; set; }
 
         public virtual ICollection<Role> Roles { get; set; }
+
+        public virtual ICollection<UserProfile> Users { get; set; }
     }
 }

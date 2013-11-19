@@ -187,25 +187,25 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\WishesController.cs" />
     <Compile Include="DataAccess\DatabaseContext.cs" />
-    <Compile Include="Migrations\201311182028073_Init.cs" />
-    <Compile Include="Migrations\201311182028073_Init.Designer.cs">
-      <DependentUpon>201311182028073_Init.cs</DependentUpon>
+    <Compile Include="Migrations\201311190743132_Init.cs" />
+    <Compile Include="Migrations\201311190743132_Init.Designer.cs">
+      <DependentUpon>201311190743132_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="BusinessLogic\Entities\Enums\WishPrioriries.cs" />
-    <Compile Include="BusinessLogic\Entities\Enums\WishStatuses.cs" />
-    <Compile Include="BusinessLogic\Entities\Profile\Membership.cs" />
-    <Compile Include="BusinessLogic\Entities\Profile\OAuthMembership.cs" />
-    <Compile Include="BusinessLogic\Entities\Profile\Role.cs" />
-    <Compile Include="BusinessLogic\Entities\Profile\UserInRole.cs" />
-    <Compile Include="BusinessLogic\Entities\Profile\UserProfile.cs" />
-    <Compile Include="BusinessLogic\Entities\Wishes\Wish.cs" />
+    <Compile Include="Core\Entities\Enums\WishPrioriries.cs" />
+    <Compile Include="Core\Entities\Enums\WishStatuses.cs" />
+    <Compile Include="Core\Entities\Profile\Membership.cs" />
+    <Compile Include="Core\Entities\Profile\OAuthMembership.cs" />
+    <Compile Include="Core\Entities\Profile\Role.cs" />
+    <Compile Include="Core\Entities\Profile\UserInRole.cs" />
+    <Compile Include="Core\Entities\Profile\UserProfile.cs" />
+    <Compile Include="Core\Entities\Wishes\Wish.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="BusinessLogic\Entities\Wishes\WishList.cs" />
+    <Compile Include="Core\Entities\Wishes\WishList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -340,8 +340,8 @@
     <Folder Include="UserFiles\WishImages\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201311182028073_Init.resx">
-      <DependentUpon>201311182028073_Init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201311190743132_Init.resx">
+      <DependentUpon>201311190743132_Init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

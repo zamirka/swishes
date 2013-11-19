@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace swishes.BusinessLogic.Entities.Profile
+namespace swishes.Core.Entities.Profile
 {
     [Table("webpages_OAuthMembership")]
     public class OAuthMembership

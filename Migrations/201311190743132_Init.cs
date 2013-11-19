@@ -13,8 +13,12 @@ namespace swishes.Migrations
                     {
                         UserId = c.Int(nullable: false, identity: true),
                         UserName = c.String(),
+                        UserInRole_UserId = c.Int(),
+                        UserInRole_RoleId = c.Int(),
                     })
-                .PrimaryKey(t => t.UserId);
+                .PrimaryKey(t => t.UserId)
+                .ForeignKey("dbo.webpages_UsersInRoles", t => new { t.UserInRole_UserId, t.UserInRole_RoleId })
+                .Index(t => new { t.UserInRole_UserId, t.UserInRole_RoleId });
             
             CreateTable(
                 "dbo.webpages_OAuthMembership",
@@ -102,9 +106,11 @@ namespace swishes.Migrations
             DropIndex("dbo.webpages_Roles", new[] { "UserInRole_UserId", "UserInRole_RoleId" });
             DropIndex("dbo.Wishes", new[] { "WishListId" });
             DropIndex("dbo.webpages_OAuthMembership", new[] { "UserId" });
+            DropIndex("dbo.UserProfile", new[] { "UserInRole_UserId", "UserInRole_RoleId" });
             DropForeignKey("dbo.webpages_Roles", new[] { "UserInRole_UserId", "UserInRole_RoleId" }, "dbo.webpages_UsersInRoles");
             DropForeignKey("dbo.Wishes", "WishListId", "dbo.WishLists");
             DropForeignKey("dbo.webpages_OAuthMembership", "UserId", "dbo.UserProfile");
+            DropForeignKey("dbo.UserProfile", new[] { "UserInRole_UserId", "UserInRole_RoleId" }, "dbo.webpages_UsersInRoles");
             DropTable("dbo.WishLists");
             DropTable("dbo.webpages_UsersInRoles");
             DropTable("dbo.webpages_Roles");
