@@ -5,8 +5,8 @@ using System.Web;
 using System.Data;
 using System.Data.Entity;
 
-using swishes.BusinessLogic.Entities.Wishes;
-using swishes.BusinessLogic.Entities.Profile;
+using swishes.Core.Entities.Wishes;
+using swishes.Core.Entities.Profile;
 
 namespace swishes.DataAccess
 {

@@ -6,9 +6,9 @@ using System.Data;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-using swishes.BusinessLogic.Entities.Enums;
+using swishes.Core.Entities.Enums;
 
-namespace swishes.BusinessLogic.Entities.Wishes
+namespace swishes.Core.Entities.Wishes
 {
     [Table("Wishes")]
     public class Wish

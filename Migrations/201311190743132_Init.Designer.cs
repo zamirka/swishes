@@ -11,7 +11,7 @@ namespace swishes.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201311182028073_Init"; }
+            get { return "201311190743132_Init"; }
         }
         
         string IMigrationMetadata.Source

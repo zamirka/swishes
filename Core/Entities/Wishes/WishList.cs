@@ -5,7 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace swishes.BusinessLogic.Entities.Wishes
+namespace swishes.Core.Entities.Wishes
 {
     [Table("WishLists")]
     public class WishList
