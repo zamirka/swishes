@@ -8,7 +8,7 @@ using System.Data.Entity;
 using swishes.Core.Entities.Wishes;
 using swishes.Core.Entities.Profile;
 
-namespace swishes.DataAccess
+namespace swishes.Infrastructure.DataAccess
 {
     public class DatabaseContext : DbContext
     {
