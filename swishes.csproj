@@ -202,7 +202,11 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\WishesController.cs" />
-    <Compile Include="Infrastructure\DataAccess\DatabaseContext.cs" />
+    <Compile Include="Infrastructure\DataAccess\SqlServerContext.cs" />
+    <Compile Include="Infrastructure\DataAccess\IDataContext.cs" />
+    <Compile Include="Infrastructure\Repositories\IRepository.cs" />
+    <Compile Include="Infrastructure\Repositories\Repository.cs" />
+    <Compile Include="Infrastructure\Repositories\RepositoryOperationStatus.cs" />
     <Compile Include="Migrations\201311190743132_Init.cs" />
     <Compile Include="Migrations\201311190743132_Init.Designer.cs">
       <DependentUpon>201311190743132_Init.cs</DependentUpon>
