@@ -10,10 +10,16 @@ using swishes.Core.Entities.Profile;
 
 namespace swishes.Infrastructure.DataAccess
 {
-    public class DatabaseContext : DbContext
+    public class SqlServerContext : DbContext, IDataContext
     {
-        public DatabaseContext()
-            : base("LocalConnection")
+        public SqlServerContext()
+            : base()
+        {
+            Database.SetInitializer<SqlServerContext>(null);
+        }
+
+        public SqlServerContext()
+            :base("Name=SqlServerConnection")
         {
 
         }
