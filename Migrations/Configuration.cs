@@ -5,14 +5,14 @@ namespace swishes.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<swishes.DataAccess.DatabaseContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<swishes.Infrastructure.DataAccess.SqlServerContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(swishes.DataAccess.DatabaseContext context)
+        protected override void Seed(swishes.Infrastructure.DataAccess.SqlServerContext context)
         {
             //  This method will be called after migrating to the latest version.
 

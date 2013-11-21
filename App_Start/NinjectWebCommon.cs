@@ -10,6 +10,10 @@ namespace swishes.App_Start
 
     using Ninject;
     using Ninject.Web.Common;
+    
+    using swishes.Infrastructure.Logging;
+    using swishes.Infrastructure.DataAccess;
+    using swishes.Infrastructure.Repositories;
 
     public static class NinjectWebCommon 
     {
@@ -53,6 +57,9 @@ namespace swishes.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            kernel.Bind<ILogger>().To<NLogLogger>().InSingletonScope();
+            kernel.Bind<IDataContext>().To<SqlServerContext>().InSingletonScope();
+            kernel.Bind<IUnitOfWork>().To<UnitOfWork<SqlServerContext>>().InSingletonScope();
         }        
     }
 }

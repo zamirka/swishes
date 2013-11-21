@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using WebMatrix.WebData;
 
 using swishes.Models;
-using swishes.DataAccess;
+using swishes.Infrastructure.DataAccess;
 
 namespace swishes.Filters
 {
@@ -27,11 +27,11 @@ namespace swishes.Filters
         {
             public SimpleMembershipInitializer()
             {
-                Database.SetInitializer<DatabaseContext>(null);
+                Database.SetInitializer<SqlServerContext>(null);
 
                 try
                 {
-                    using (var context = new DatabaseContext())
+                    using (var context = new SqlServerContext())
                     {
                         if (!context.Database.Exists())
                         {

@@ -204,9 +204,13 @@
     <Compile Include="Controllers\WishesController.cs" />
     <Compile Include="Infrastructure\DataAccess\SqlServerContext.cs" />
     <Compile Include="Infrastructure\DataAccess\IDataContext.cs" />
+    <Compile Include="Infrastructure\Logging\ILogger.cs" />
+    <Compile Include="Infrastructure\Logging\NLogLogger.cs" />
     <Compile Include="Infrastructure\Repositories\IRepository.cs" />
+    <Compile Include="Infrastructure\Repositories\IUnitOfWork.cs" />
     <Compile Include="Infrastructure\Repositories\Repository.cs" />
     <Compile Include="Infrastructure\Repositories\RepositoryOperationStatus.cs" />
+    <Compile Include="Infrastructure\Repositories\UnitOfWork.cs" />
     <Compile Include="Migrations\201311190743132_Init.cs" />
     <Compile Include="Migrations\201311190743132_Init.Designer.cs">
       <DependentUpon>201311190743132_Init.cs</DependentUpon>
@@ -285,6 +289,12 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\PublishProfiles\testfacebook.pubxml" />
     <None Include="Properties\PublishProfiles\testsocial - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\testsocial - Web Deploy.pubxml" />

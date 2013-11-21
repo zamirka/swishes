@@ -1,26 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using swishes.Models;
-using swishes.DataAccess;
-using swishes.Core.Entities.Wishes;
-using swishes.Core.Entities.Enums;
-using System.Data.Entity.Infrastructure;
-using System.Data.Objects;
-using System.IO;
-
-namespace swishes.Controllers
+﻿namespace swishes.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Web;
+    using System.Web.Mvc;
+    using System.Data.Entity.Infrastructure;
+    using System.Data.Objects;
+    using System.IO;
+
+    using swishes.Models;
+    using swishes.Core.Entities.Wishes;
+    using swishes.Core.Entities.Enums;
+    using swishes.Infrastructure.Logging;
+    using swishes.Infrastructure.Repositories;
+    using swishes.Core.Entities.Profile;
+
     public class WishesController : Controller
     {
-        private DatabaseContext db = new DatabaseContext();
+        private readonly ILogger _logger;
+        private readonly IUnitOfWork _uow;
+        private readonly IRepository<Wish> _wishesRepo;
+        private readonly IRepository<UserProfile> _userProfileRepo;
+        private readonly IRepository<WishList> _wishListsRepo;
 
-        //
-        // GET: /Wishes/
+        public WishesController(ILogger logger, IUnitOfWork uow)
+        {
+            try
+            {
+                _logger = logger;
+                _uow = uow;
+                _wishesRepo = _uow.GetRepository<Wish>();
+                _userProfileRepo = _uow.GetRepository<UserProfile>();
+                _wishListsRepo = _uow.GetRepository<WishList>();
+            }
+            catch (Exception ex)
+            {
+                _logger.ErrorException("Error in WishesController.ctor(ILogger, IUnitOfWork)", ex);
+            }
+        }
 
         public ActionResult Index()
         {
@@ -28,26 +48,24 @@ namespace swishes.Controllers
             {
                 return RedirectToAction("~/Wishes/NotAuthenticated");
             }
-            var userProfile = db.UserProfiles.Where(up => up.UserName == User.Identity.Name).SingleOrDefault();
-            var wishesToShow = db.Wishes.Join(db.WishLists, w => w.WishListId, wl => wl.Id, (w, wl) => new { wishList = wl, wish = w }).Where(couple => couple.wishList.UserId == userProfile.UserId).Select(couple => couple.wish).ToList();
+            var userProfile = _userProfileRepo.GetAll().Where(up => up.UserName == User.Identity.Name).SingleOrDefault();
+            var wishesToShow = _wishesRepo.GetAll()
+                .Join(_wishListsRepo.GetAll(), w => w.WishListId, wl => wl.Id, (w, wl) => new { wishList = wl, wish = w })
+                .Where(couple => couple.wishList.UserId == userProfile.UserId)
+                .Select(couple => couple.wish).ToList();
+            
             return View(wishesToShow);
         }
 
-        //
-        // GET: /Wishes/Details/5
-
         public ActionResult Details(int id = 0)
         {
-            Wish wish = db.Wishes.Find(id);
+            var wish = GetWishById(id);
             if (wish == null)
             {
                 return HttpNotFound();
             }
             return View(wish);
         }
-
-        //
-        // GET: /Wishes/Create
 
         public ActionResult Create()
         {
@@ -55,66 +73,68 @@ namespace swishes.Controllers
             return View();
         }
 
-        //
-        // POST: /Wishes/Create
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Wish wish)
         {
-            var userProfile = db.UserProfiles.Where(u => u.UserName == User.Identity.Name).SingleOrDefault();
-            var wishListId = db.WishLists.Where(wl => wl.UserId == userProfile.UserId).Select(wl => wl.Id).SingleOrDefault();
+            int wishListId;
+            UserProfile userProfile;
+            try
+            {
+                userProfile = _userProfileRepo.GetAll().Where(u => u.UserName == User.Identity.Name).SingleOrDefault();
+                wishListId = _wishListsRepo.GetAll().Where(wl => wl.UserId == userProfile.UserId).Select(wl => wl.Id).SingleOrDefault();
+            }
+            catch (Exception ex)
+            {
+                _logger.WarnException("Collection is null or has more than one entity with key", ex);
+                return HttpNotFound();
+            }
+    
             wish.WishListId = wishListId;
             wish.Status = WishStatuses.FreeForPresent;
-            db.Wishes.Add(wish);
-            db.SaveChanges();
+            _wishesRepo.Add(wish);
+            _uow.Save();
             return RedirectToAction("Index");
         }
-        //
-        // GET: /Wishes/Edit/5
-
+        
         public ActionResult Edit(int id = 0)
         {
-            Wish wish = db.Wishes.Find(id);
+            var wish = GetWishById(id);
             if (wish == null)
             {
                 return HttpNotFound();
             }
+
             ViewBag.Priorities = GetPriorityListForDropDown();
             return View(wish);
         }
 
-        //
-        // POST: /Wishes/Edit/5
-
-        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Wish wish)
         {
             if (ModelState.IsValid)
             {
-                try
-                {
-                    db.Wishes.Attach(wish);
-                    db.Entry(wish).State = EntityState.Modified;
-                    db.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-                    ((IObjectContextAdapter)db).ObjectContext.Refresh(RefreshMode.ClientWins, db.Wishes);
-                    db.SaveChanges();
-                }
-                return RedirectToAction("Index");
+                _wishesRepo.Update(wish);
+                _uow.Save();
+                //try
+                //{
+                //    db.Wishes.Attach(wish);
+                //    db.Entry(wish).State = EntityState.Modified;
+                //    db.SaveChanges();
+                //}
+                //catch (Exception ex)
+                //{
+                //    ((IObjectContextAdapter)db).ObjectContext.Refresh(RefreshMode.ClientWins, db.Wishes);
+                //    db.SaveChanges();
+                //}
+                //return RedirectToAction("Index");
             }
-            return View(wish);
+            return RedirectToAction("Index");
         }
-
-        //
-        // GET: /Wishes/Delete/5
 
         public ActionResult Delete(int id = 0)
         {
-            Wish wish = db.Wishes.Find(id);
+            var wish = GetWishById(id);
             if (wish == null)
             {
                 return HttpNotFound();
@@ -122,25 +142,34 @@ namespace swishes.Controllers
             return View(wish);
         }
 
-        //
-        // POST: /Wishes/Delete/5
-
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Wish wish = db.Wishes.Find(id);
-            db.Wishes.Remove(wish);
-            DeleteFile(wish.ImageName);
-            db.SaveChanges();
+            var wish = GetWishById(id);
+            if (wish == null)
+            {
+                return HttpNotFound();
+            }
+            _wishesRepo.Delete(wish);
+            _uow.Save();
             
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
+        private Wish GetWishById(int id)
         {
-            db.Dispose();
-            base.Dispose(disposing);
+            Wish wish = null;
+            try
+            {
+                wish = _wishesRepo.GetAll().Where(w => w.Id == id).SingleOrDefault();
+            }
+            catch (Exception ex)
+            {
+                _logger.WarnException(string.Format("Collection is null or has more than one entity with id = {0}", id), ex);
+            }
+
+            return wish;
         }
 
         public ViewResult NotAuthenticated()

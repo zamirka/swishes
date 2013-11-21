@@ -84,7 +84,11 @@
 
         public virtual bool Any()
         {
-            return _dbset.Any();
+            if (_dbset != null)
+            {
+                return _dbset.Any();
+            }
+            return false;
         }
     }
 }
