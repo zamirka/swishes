@@ -1,26 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Transactions;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Security;
-using DotNetOpenAuth.AspNet;
-using Microsoft.Web.WebPages.OAuth;
-using WebMatrix.WebData;
-using swishes.Filters;
-using swishes.Models;
-using swishes.DataAccess;
-using swishes.Core.Entities.Profile;
-using swishes.Core.Entities.Wishes;
-
-namespace swishes.Controllers
+﻿namespace swishes.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Transactions;
+    using System.Web;
+    using System.Web.Mvc;
+    using System.Web.Security;
+    using DotNetOpenAuth.AspNet;
+    using Microsoft.Web.WebPages.OAuth;
+    using WebMatrix.WebData;
+
+    using swishes.Filters;
+    using swishes.Models;
+    using swishes.Infrastructure.DataAccess;
+    using swishes.Core.Entities.Profile;
+    using swishes.Core.Entities.Wishes;
+
     [Authorize]
     [InitializeSimpleMembership]
     public class AccountController : Controller
     {
-        private DatabaseContext db = new DatabaseContext();
+        private SqlServerContext db = new SqlServerContext();
         
         //
         // GET: /Account/Login
@@ -274,7 +275,7 @@ namespace swishes.Controllers
             if (ModelState.IsValid)
             {
                 // Insert a new user into the database
-                using (DatabaseContext db = new DatabaseContext())
+                using (SqlServerContext db = new SqlServerContext())
                 {
                     UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
                     // Check if user already exists

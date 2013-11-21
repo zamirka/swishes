@@ -12,8 +12,7 @@ namespace swishes.Infrastructure.DataAccess
 {
     public class SqlServerContext : DbContext, IDataContext
     {
-        public SqlServerContext()
-            : base()
+        static SqlServerContext()
         {
             Database.SetInitializer<SqlServerContext>(null);
         }
