@@ -37,5 +37,10 @@ namespace swishes.Infrastructure.DataAccess
             modelBuilder.Entity<OAuthMembership>().HasKey(a => new { a.Provider, a.ProviderUserId });
             modelBuilder.Entity<UserInRole>().HasKey(a => new { a.UserId, a.RoleId });
         }
+
+        public new IDbSet<T> Set<T>() where T : class
+        {
+            return base.Set<T>();
+        }
     }
 }
