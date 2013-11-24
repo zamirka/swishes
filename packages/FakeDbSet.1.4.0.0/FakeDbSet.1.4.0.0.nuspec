@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>FakeDbSet</id>
+    <version>1.4.0.0</version>
+    <title>MockDbSet</title>
+    <authors>a-h</authors>
+    <owners>a-h</owners>
+    <projectUrl>https://github.com/a-h/FakeDbSet</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A ready to use FakeDbSet for faking Entity Framework code.</description>
+    <releaseNotes>A ready to use FakeDbSet for faking Entity Framework code.  First release.</releaseNotes>
+    <copyright />
+    <tags>EF InMemoryDbSet Code First</tags>
+    <dependencies>
+      <dependency id="EntityFramework" version="5.0.0" />
+    </dependencies>
+  </metadata>
+</package>
