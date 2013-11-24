@@ -1,17 +1,30 @@
 ﻿@model swishes.Models.RegisterModel
 @{
     ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_SuperLayout.cshtml";
 }
 
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-    <h2>Create a new account.</h2>
-</hgroup>
+@section Menu {
+     <ul class="nav nav-pills pull-right">
+          <li>
+            @Html.ActionLink("Home", "Index", "Home")
+          </li>
+          <li>
+            @Html.ActionLink("About", "About", "Home")
+          </li>
+          <li>
+              @Html.ActionLink("Contacts", "Contact", "Home")
+          </li>
+          <li class="active">
+              @Html.ActionLink("Sign In", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+          </li>
+        </ul>
+}
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary()
-
+    <div class="container">
     <fieldset>
         <legend>Registration Form</legend>
         <ol>
@@ -30,6 +43,7 @@
         </ol>
         <input type="submit" value="Register" />
     </fieldset>
+        </div>
 }
 
 @section Scripts {

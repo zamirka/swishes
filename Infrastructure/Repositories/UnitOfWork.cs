@@ -28,7 +28,7 @@
                 return _repositories[typeof(TEntity)] as IRepository<TEntity>;
             }
 
-            var repository = new Repository<TEntity>(_ctx);
+            var repository = new Repository<TEntity>(_ctx, _logger);
 
             _repositories.Add(typeof(TEntity), repository);
 

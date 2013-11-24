@@ -40,7 +40,7 @@ namespace swishes.Filters
                         }
                     }
 
-                    WebSecurity.InitializeDatabaseConnection("LocalConnection", "UserProfile", "UserId", "UserName", autoCreateTables: true);
+                    WebSecurity.InitializeDatabaseConnection("SqlServerConnection", "UserProfile", "UserId", "UserName", autoCreateTables: false);
                 }
                 catch (Exception ex)
                 {
