@@ -209,7 +209,7 @@
     <Compile Include="Infrastructure\Repositories\IRepository.cs" />
     <Compile Include="Infrastructure\Repositories\IUnitOfWork.cs" />
     <Compile Include="Infrastructure\Repositories\Repository.cs" />
-    <Compile Include="Infrastructure\Repositories\RepositoryOperationStatus.cs" />
+    <Compile Include="Infrastructure\Repositories\RepositoryOperationResult.cs" />
     <Compile Include="Infrastructure\Repositories\UnitOfWork.cs" />
     <Compile Include="Migrations\201311190743132_Init.cs" />
     <Compile Include="Migrations\201311190743132_Init.Designer.cs">

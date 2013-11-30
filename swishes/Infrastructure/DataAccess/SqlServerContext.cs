@@ -42,5 +42,17 @@ namespace swishes.Infrastructure.DataAccess
         {
             return base.Set<T>();
         }
+
+
+        public bool SetEntryState<T>(T entity, EntityState state) where T : class
+        {
+            var entry = base.Entry<T>(entity);
+            if (entry != null)
+            {
+                entry.State = state;
+                return true;
+            }
+            return false;
+        }
     }
 }

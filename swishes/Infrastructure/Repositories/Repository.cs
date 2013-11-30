@@ -28,8 +28,12 @@
             return _dbset;
         }
 
-        public virtual RepositoryOperationStatus Add(T entity)
+        public virtual RepositoryOperationResult Add(T entity)
         {
+            if (entity == null)
+            {
+                return RepositoryOperationResult.NullEntity;
+            }
             int countBefore;
             int countAfter;
             try
@@ -44,61 +48,86 @@
             catch (Exception ex)
             {
                 _logger.ErrorException(string.Format("Error occured in Repository<{0}>.Add(entity)", typeof(T).ToString()), ex);
-                return RepositoryOperationStatus.UnknownError;
+                return RepositoryOperationResult.UnknownError;
             }
-            return countAfter > countBefore ? RepositoryOperationStatus.Success : RepositoryOperationStatus.EntityAlreadyExists;
+            return countAfter > countBefore ? RepositoryOperationResult.Success : RepositoryOperationResult.EntityAlreadyExists;
         }
 
-        public virtual RepositoryOperationStatus Delete(T entity)
+        public virtual RepositoryOperationResult Delete(T entity)
         {
+            if (entity == null)
+            {
+                return RepositoryOperationResult.NullEntity;
+            }
             try
             {
                 if (_dbset.Remove(entity) != null)
                 {
-                    var entry = _context.Entry(entity);
-                    entry.State = EntityState.Deleted;
-                    return RepositoryOperationStatus.Success;
+                    if (_context.SetEntryState(entity, EntityState.Deleted))
+                    {
+                        return RepositoryOperationResult.Success;
+                    }
+                    return RepositoryOperationResult.EntityNotFound;
+                }
+                else
+                {
+                    throw new Exception("Delete Operation result is null");
                 }
             }
             catch (Exception ex)
             {
                 _logger.ErrorException(string.Format("Error occured in Repository<{0}>.Delete(entity)", typeof(T).ToString()), ex);
-                return RepositoryOperationStatus.UnknownError;
+                return RepositoryOperationResult.UnknownError;
             }
-            return RepositoryOperationStatus.EntityNotFound;
         }
 
-        public virtual RepositoryOperationStatus DeleteAll(IEnumerable<T> entities)
+        public virtual RepositoryOperationResult DeleteAll(IEnumerable<T> entities)
         {
-            RepositoryOperationStatus result = RepositoryOperationStatus.Success;
-            foreach (var entity in entities)
+            if (entities == null)
             {
+                return RepositoryOperationResult.NullEntity;
+            }
+            RepositoryOperationResult result = RepositoryOperationResult.Success;
+            var itemsToDelete = entities.Count();
+            for (int i = itemsToDelete - 1; i >= 0; i--)
+            {
+                var entity = entities.ToArray()[i];
                 var singleResult = Delete(entity);
-                if (singleResult != RepositoryOperationStatus.Success
-                    || result != RepositoryOperationStatus.Success)
+                if (singleResult != RepositoryOperationResult.Success
+                    || result != RepositoryOperationResult.Success)
                 {
-                    result = RepositoryOperationStatus.NotAllEntitiesProcessed;
+                    result = RepositoryOperationResult.NotAllEntitiesProcessed;
                 }
             }
             return result;
         }
 
-        public virtual RepositoryOperationStatus Update(T entity)
+        public virtual RepositoryOperationResult Update(T entity)
         {
+            if (entity == null)
+            {
+                return RepositoryOperationResult.NullEntity;
+            }
             try
             {
-                var entry = _context.Entry(entity);
                 if (_dbset.Attach(entity) != null)
                 {
-                    entry.State = EntityState.Modified;
+                    if (_context.SetEntryState(entity, EntityState.Modified))
+                    {
+                        return RepositoryOperationResult.Success;
+                    }
+                    return RepositoryOperationResult.EntityNotFound;
+                }
+                else
+                {
+                    throw new Exception("Update operation resulted in Error");
                 }
             }
             catch (Exception ex)
             {
                 _logger.ErrorException(string.Format("Error occured in Repository<{0}>.Delete(entity)", typeof(T).ToString()), ex);
-                return RepositoryOperationStatus.UnknownError;
+                return RepositoryOperationResult.UnknownError;
             }
-            return RepositoryOperationStatus.EntityNotFound;
         }
 
         public virtual bool Any()
