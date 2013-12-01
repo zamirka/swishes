@@ -10,7 +10,9 @@
         IDbSet<T> Set<T>() where T : class;
         DbEntityEntry<T> Entry<T>(T entity) where T : class;
         bool SetEntryState<T>(T entity, EntityState state) where T : class;
+        T GetAttached<T>(T entity) where T : class;
         int SaveChanges();
+        void Detach<T>(T entity) where T : class;
         void Dispose();
     }
 }

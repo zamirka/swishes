@@ -49,6 +49,7 @@
                 return RedirectToAction("~/Wishes/NotAuthenticated");
             }
             var userProfile = _userProfileRepo.GetAll().Where(up => up.UserName == User.Identity.Name).SingleOrDefault();
+            Microsoft. FacebookClientExtensions
             var wishesToShow = _wishesRepo.GetAll()
                 .Join(_wishListsRepo.GetAll(), w => w.WishListId, wl => wl.Id, (w, wl) => new { wishList = wl, wish = w })
                 .Where(couple => couple.wishList.UserId == userProfile.UserId)
@@ -109,6 +110,7 @@
             return View(wish);
         }
 
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Wish wish)
         {
@@ -116,18 +118,6 @@
             {
                 _wishesRepo.Update(wish);
                 _uow.Save();
-                //try
-                //{
-                //    db.Wishes.Attach(wish);
-                //    db.Entry(wish).State = EntityState.Modified;
-                //    db.SaveChanges();
-                //}
-                //catch (Exception ex)
-                //{
-                //    ((IObjectContextAdapter)db).ObjectContext.Refresh(RefreshMode.ClientWins, db.Wishes);
-                //    db.SaveChanges();
-                //}
-                //return RedirectToAction("Index");
             }
             return RedirectToAction("Index");
         }

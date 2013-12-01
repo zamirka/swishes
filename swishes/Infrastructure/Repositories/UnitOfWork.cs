@@ -14,11 +14,12 @@
         private bool _disposed;
         private readonly ILogger _logger;
 
-        public UnitOfWork()
+        public UnitOfWork(ILogger logger)
         {
             _ctx = new TContext();
             _repositories = new Dictionary<Type, object>();
             _disposed = false;
+            _logger = logger;
         }
 
         public IRepository<TEntity> GetRepository<TEntity>() where TEntity : class

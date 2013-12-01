@@ -110,22 +110,32 @@
             }
             try
             {
-                if (_dbset.Attach(entity) != null)
+                try
                 {
-                    if (_context.SetEntryState(entity, EntityState.Modified))
+                    if (_dbset.Attach(entity) == null)
                     {
-                        return RepositoryOperationResult.Success;
+                        throw new Exception("Update operation resulted in Error");
                     }
-                    return RepositoryOperationResult.EntityNotFound;
                 }
-                else
+                catch (InvalidOperationException ex)
                 {
-                    throw new Exception("Update operation resulted in Error");
+                    _logger.ErrorException(string.Format("Item already in Repository<{0}> method Update(entity)", typeof(T).ToString()), ex);
+                        var existingEntity = _context.GetAttached(entity);
+                    if (existingEntity != null)
+                    {
+                        _context.Detach(existingEntity);
+                        _dbset.Attach(entity);
+                    }
                 }
+                if (_context.SetEntryState(entity, EntityState.Modified))
+                {
+                    return RepositoryOperationResult.Success;
+                }
+                return RepositoryOperationResult.EntityNotFound;
             }
             catch (Exception ex)
             {
-                _logger.ErrorException(string.Format("Error occured in Repository<{0}>.Delete(entity)", typeof(T).ToString()), ex);
+                _logger.ErrorException(string.Format("Error occured in Repository<{0}>.Update(entity)", typeof(T).ToString()), ex);
                 return RepositoryOperationResult.UnknownError;
             }
         }
