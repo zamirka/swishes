@@ -16,15 +16,26 @@
     using swishes.Infrastructure.DataAccess;
     using swishes.Core.Entities.Profile;
     using swishes.Core.Entities.Wishes;
+    using swishes.Infrastructure.Repositories;
+    using swishes.Infrastructure.Logging;
 
     [Authorize]
     [InitializeSimpleMembership]
     public class AccountController : Controller
     {
-        private SqlServerContext db = new SqlServerContext();
+        private readonly IUnitOfWork _uow;
+        private readonly ILogger _logger;
+        private readonly IRepository<UserProfile>_profileRepository;
+        private readonly IRepository<WishList> _wishListRepository;
         
-        //
-        // GET: /Account/Login
+
+        public AccountController(IUnitOfWork uow, ILogger logger)
+        {
+            _uow = uow;
+            _logger = logger;
+            _profileRepository = _uow.GetRepository<UserProfile>();
+            _wishListRepository = _uow.GetRepository<WishList>();
+        }
 
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -32,9 +43,6 @@
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
-
-        //
-        // POST: /Account/Login
 
         [HttpPost]
         [AllowAnonymous]
@@ -51,29 +59,19 @@
             return View(model);
         }
 
-        //
-        // POST: /Account/LogOff
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
             WebSecurity.Logout();
-
             return RedirectToAction("Index", "Home");
         }
-
-        //
-        // GET: /Account/Register
 
         [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
         }
-
-        //
-        // POST: /Account/Register
 
         [HttpPost]
         [AllowAnonymous]
@@ -88,7 +86,6 @@
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
                     WebSecurity.Login(model.UserName, model.Password);
                     CreateWishList(model.UserName);
-                    db.SaveChanges();
                     return RedirectToAction("Index", "Wishes");
                 }
                 catch (MembershipCreateUserException e)
@@ -104,9 +101,6 @@
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-
-        //
-        // POST: /Account/Disassociate
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -134,9 +128,6 @@
             return RedirectToAction("Manage", new { Message = message });
         }
 
-        //
-        // GET: /Account/Manage
-
         public ActionResult Manage(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
@@ -148,9 +139,6 @@
             ViewBag.ReturnUrl = Url.Action("Manage");
             return View();
         }
-
-        //
-        // POST: /Account/Manage
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -212,9 +200,6 @@
             return View(model);
         }
 
-        //
-        // POST: /Account/ExternalLogin
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -222,9 +207,6 @@
         {
             return new ExternalLoginResult(provider, Url.Action("ExternalLoginCallback", new { ReturnUrl = returnUrl }));
         }
-
-        //
-        // GET: /Account/ExternalLoginCallback
 
         [AllowAnonymous]
         public ActionResult ExternalLoginCallback(string returnUrl)
@@ -256,9 +238,6 @@
             }
         }
 
-        //
-        // POST: /Account/ExternalLoginConfirmation
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -274,16 +253,12 @@
 
             if (ModelState.IsValid)
             {
-                // Insert a new user into the database
-                using (SqlServerContext db = new SqlServerContext())
-                {
-                    UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
+                    UserProfile user = _profileRepository.GetAll().FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
                     // Check if user already exists
                     if (user == null)
                     {
                         // Insert name into the profile table
-                        db.UserProfiles.Add(new UserProfile { UserName = model.UserName });
-                        db.SaveChanges();
+                        _profileRepository.Add(new UserProfile { UserName = model.UserName });
                         CreateWishList(model.UserName);
                         OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
                         OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
@@ -293,7 +268,6 @@
                     {
                         ModelState.AddModelError("UserName", "User name already exists. Please enter a different user name.");
                     }
-                }
             }
 
             ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(provider).DisplayName;
@@ -303,12 +277,9 @@
 
         private void CreateWishList(string userName)
         {
-            var wishList = new WishList() { UserId = db.UserProfiles.Where(up => up.UserName == userName).Select(up => up.UserId).SingleOrDefault() };
-            db.WishLists.Add(wishList);
-            db.SaveChanges();
+            var wishList = new WishList() { UserId = _profileRepository.GetAll().Where(up => up.UserName == userName).Select(up => up.UserId).SingleOrDefault() };
+            _wishListRepository.Add(wishList);
         }
-        //
-        // GET: /Account/ExternalLoginFailure
 
         [AllowAnonymous]
         public ActionResult ExternalLoginFailure()

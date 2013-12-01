@@ -166,3 +166,4 @@ pip-log.txt
 *.mdf
 *.ldf
 wishme.azurewebsites.net.PublishSettings
+swishes/logs/*.log
